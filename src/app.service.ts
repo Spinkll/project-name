@@ -13,8 +13,8 @@ export class AppService {
       port: 587,
       secure: false, // true для 465 порта, false для других портов
       auth: {
-        user: 'olaalinevskaa@gmail.com', // Ваша почта
-        pass: 'cgya zvcy ojsp qkgr', // Пароль или приложение пароль Gmail
+        user: 'deliveri77798@gmail.com', // Ваша почта
+        pass: 'yhwz zckq zexb pmdc', // Пароль или приложение пароль Gmail
       },
     });
 
